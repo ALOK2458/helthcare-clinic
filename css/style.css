@@ -1,0 +1,119 @@
+:root {
+    --accent: #2d8fdd;
+    --bg: #f7f9fc;
+    --text: #1b1b1b
+}
+
+* {
+    box-sizing: border-box
+}
+
+body {
+    font-family: Inter, system-ui, Segoe UI, Arial, sans-serif;
+    margin: 0;
+    color: var(--text);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 24px
+}
+
+.site-header {
+    background: #fff;
+    border-bottom: 1px solid #e6eef6
+}
+
+.site-header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between
+}
+
+.logo {
+    margin: 0;
+    padding: 12px 0;
+    font-size: 18px
+}
+
+nav a {
+    margin-left: 16px;
+    color: var(--text);
+    text-decoration: none
+}
+
+.hero {
+    padding: 64px 0;
+    background: linear-gradient(135deg, #eef7ff, transparent)
+}
+
+.hero h2 {
+    margin: 0 0 8px;
+    font-size: 28px
+}
+
+.btn {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 6px;
+    text-decoration: none
+}
+
+.services,
+.doctors {
+    padding: 36px 0
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px
+}
+
+.card {
+    background: #fff;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(16, 24, 40, 0.04)
+}
+
+.contact label {
+    display: block;
+    margin-bottom: 8px
+}
+
+.contact input,
+.contact textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #d7e6f4;
+    border-radius: 6px
+}
+
+.note {
+    color: #666;
+    font-size: 14px;
+    margin-top: 8px
+}
+
+.site-footer {
+    padding: 16px 0;
+    text-align: center;
+    color: #666
+}
+
+@media (max-width:600px) {
+    .site-header .container {
+        flex-direction: column;
+        align-items: flex-start
+    }
+    nav a {
+        margin-left: 0;
+        margin-right: 12px
+    }
+}

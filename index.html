@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HealthCare Clinic</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="container">
+            <h1 class="logo">HealthCare Clinic</h1>
+            <nav>
+                <a href="#services">Services</a>
+                <a href="#doctors">Doctors</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>Quality care. Close to home.</h2>
+                <p>Book appointments, find providers, and get virtual care information.</p>
+                <a class="btn" href="#contact">Book Appointment</a>
+            </div>
+        </section>
+
+        <section id="services" class="container services">
+            <h3>Our Services</h3>
+            <div class="grid">
+                <div class="card">
+                    <h4>Primary Care</h4>
+                    <p>Routine exams, preventive care and chronic disease management.</p>
+                </div>
+                <div class="card">
+                    <h4>Pediatrics</h4>
+                    <p>Comprehensive care for infants, children and adolescents.</p>
+                </div>
+                <div class="card">
+                    <h4>Telemedicine</h4>
+                    <p>Virtual visits for non-emergency conditions.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="doctors" class="container doctors">
+            <h3>Meet Our Doctors</h3>
+            <div class="grid">
+                <div class="card">
+                    <h4>Dr. A. Sharma</h4>
+                    <p>Family Medicine</p>
+                </div>
+                <div class="card">
+                    <h4>Dr. S. Patel</h4>
+                    <p>Pediatrics</p>
+                </div>
+                <div class="card">
+                    <h4>Dr. L. Gomez</h4>
+                    <p>Internal Medicine</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="container contact">
+            <h3>Book an Appointment</h3>
+            <form id="appointmentForm">
+                <label>Full name
+          <input type="text" name="name" required>
+        </label>
+                <label>Email
+          <input type="email" name="email" required>
+        </label>
+                <label>Preferred date
+          <input type="date" name="date">
+        </label>
+                <label>Notes
+          <textarea name="notes"></textarea>
+        </label>
+                <button class="btn" type="submit">Request Appointment</button>
+            </form>
+            <p class="note">This is a demo site — form submissions are handled locally.</p>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 HealthCare Clinic</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>
