@@ -1,17 +1,24 @@
-# HealthCare Clinic — Demo Static Site
+# HealthCare Clinic
 
-This is a minimal, static demo healthcare website suitable for GitHub Pages or simple static hosting.
+MediCare is a healthcare demo site with a small Node.js backend for storing appointment requests locally.
 
 Quick start
 
-- Open `index.html` in your browser, or run a local static server:
+Run the full app with Node.js 18 or newer:
 
-```bash
-# with Python 3
-python -m http.server 8000
+```powershell
+npm start
 
-# then open http://localhost:8000
+# then open http://localhost:3000
 ```
+
+Appointments are saved to `data/appointments.json`. The API also exposes:
+
+- `GET /api/health` to check that the service is running.
+- `POST /api/appointments` to create a request.
+- `GET /api/appointments` to inspect locally saved requests.
+
+The backend validates required fields, rejects past dates, and prevents two active appointments for the same doctor, date, and time. Successful bookings return a unique request ID and timestamp.
 
 Deploy to GitHub
 
@@ -25,8 +32,11 @@ git remote add origin <your-repo-url>
 git push -u origin main
 ```
 2. Enable GitHub Pages: Repository Settings → Pages → Branch `main` → `/ (root)` → Save.
+3. CI/CD is already configured in `.github/workflows/ci.yml` and `.github/workflows/deploy-pages.yml`.
+   - `ci.yml` runs on every push and pull request and validates the app using a smoke test.
+   - `deploy-pages.yml` publishes the static site to GitHub Pages after a successful push to `main`.
 
 Notes
 
-- This is a front-end demo: form submissions are handled locally and not stored.
-- Customize `css/style.css` and `index.html` to match branding and content.
+- This is a local educational demo, not a production medical records system.
+- Do not use it with real patient data until authentication, encryption, access control, validation, and a compliant database are added.

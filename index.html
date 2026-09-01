@@ -1,98 +1,3377 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>HealthCare Clinic</title>
-    <link rel="stylesheet" href="css/style.css">
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MediCare - Smart Healthcare</title>
+
+    <style>
+        /* =====================================================
+           GLOBAL
+        ===================================================== */
+
+        :root {
+            --primary: #08b9d3;
+            --primary2: #13d4b0;
+            --navy: #071c2c;
+            --navy2: #0a3045;
+            --text: #08243b;
+            --muted: #607d9b;
+            --bg: #f4fcfd;
+            --white: #ffffff;
+            --border: #d5eaf0;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --success: #10b981;
+            --shadow: 0 12px 35px rgba(7, 40, 65, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, "Segoe UI", sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font-family: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .container {
+            width: min(1218px, 92%);
+            margin: auto;
+        }
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .header {
+            height: 78px;
+            background: #0b2030;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .header-inner {
+            height: 78px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .logo-box {
+            width: 43px;
+            height: 43px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 11px;
+            background: linear-gradient(135deg, #08bdd4, #13d3b2);
+            color: white;
+            font-size: 25px;
+            box-shadow: 0 5px 20px rgba(0, 190, 210, 0.25);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 36px;
+        }
+
+        .nav a {
+            color: #d8e5eb;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.25s;
+        }
+
+        .nav a:hover {
+            color: #12d0d5;
+        }
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+            position: relative;
+            min-height: 655px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background: radial-gradient(circle at 90% 80%, rgba(8, 194, 186, 0.30), transparent 35%), linear-gradient(135deg, #061b2b, #092d43, #063c4b);
+            color: white;
+        }
+
+        /* Grid background */
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+            background-size: 46px 46px;
+            opacity: 0.8;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            right: -180px;
+            bottom: -220px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(14, 214, 190, 0.24), transparent 70%);
+            filter: blur(10px);
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 65px;
+            align-items: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 9px 16px;
+            border-radius: 30px;
+            border: 1px solid rgba(0, 200, 220, 0.4);
+            background: rgba(0, 190, 210, 0.10);
+            color: #8deef4;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 22px;
+        }
+
+        .hero h1 {
+            font-size: clamp(44px, 5vw, 67px);
+            line-height: 1.03;
+            letter-spacing: -2px;
+            margin-bottom: 24px;
+            max-width: 650px;
+        }
+
+        .hero h1 span {
+            display: block;
+            background: linear-gradient(90deg, #26d9e8, #49eec2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-description {
+            max-width: 610px;
+            color: #afd0dc;
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .hero-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 24px;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(135deg, #09bad3, #16d1af);
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            box-shadow: 0 10px 25px rgba(0, 190, 210, 0.20);
+            transition: 0.3s;
+        }
+
+        .hero-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 190, 210, 0.30);
+        }
+
+        /* =====================================================
+           HERO CARD
+        ===================================================== */
+
+        .assistant-card {
+            padding: 36px;
+            border-radius: 24px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.08));
+            border: 1px solid rgba(255, 255, 255, 0.20);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.20);
+            animation: floating 5s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        .assistant-icon {
+            width: 76px;
+            height: 76px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #08bfd5, #13d4b1);
+            font-size: 32px;
+            box-shadow: 0 10px 35px rgba(0, 200, 210, 0.25);
+        }
+
+        .assistant-card h2 {
+            text-align: center;
+            font-size: 25px;
+            margin-top: 22px;
+            margin-bottom: 8px;
+        }
+
+        .assistant-card>p {
+            text-align: center;
+            color: #b5d0d9;
+            margin-bottom: 25px;
+        }
+
+        .assistant-list {
+            list-style: none;
+        }
+
+        .assistant-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+            color: #d9e9ed;
+            font-size: 14px;
+        }
+
+        /* =====================================================
+           SECTION
+        ===================================================== */
+
+        .section {
+            padding: 85px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 750px;
+            margin: 0 auto 45px;
+        }
+
+        .section-label {
+            color: #0099bb;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .section-header h2 {
+            font-size: 38px;
+            color: #061d33;
+            margin: 8px 0 12px;
+        }
+
+        .section-header p {
+            color: #607d9b;
+            font-size: 16px;
+        }
+
+        /* =====================================================
+           SERVICES
+        ===================================================== */
+
+        .services {
+            background: white;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .service-card {
+            padding: 30px;
+            min-height: 220px;
+            background: white;
+            border: 1px solid #d5ebf1;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(7, 45, 65, 0.06);
+            transition: 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 18px 40px rgba(7, 45, 65, 0.12);
+            border-color: #a9e7ee;
+        }
+
+        .service-icon {
+            width: 61px;
+            height: 61px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+            background: #e2fafd;
+            font-size: 29px;
+            margin-bottom: 24px;
+        }
+
+        .service-card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #061d33;
+        }
+
+        .service-card p {
+            color: #607d9b;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        /* =====================================================
+           SYMPTOM CHECKER
+        ===================================================== */
+
+        .symptoms {
+            background: radial-gradient(circle at 0% 50%, rgba(0, 180, 210, 0.12), transparent 30%), #f1fbfc;
+        }
+
+        .checker {
+            max-width: 900px;
+            margin: auto;
+            padding: 34px;
+            background: white;
+            border: 1px solid #d4eaf0;
+            border-radius: 18px;
+            box-shadow: 0 12px 40px rgba(5, 50, 70, 0.08);
+        }
+
+        .checker-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .checker-title-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #008ba9;
+            font-size: 25px;
+        }
+
+        .checker-title h3 {
+            font-size: 21px;
+            color: #061d33;
+        }
+
+        .checker-title p {
+            color: #607d9b;
+            font-size: 13px;
+        }
+
+        .age-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 7px;
+        }
+
+        .age-input {
+            width: 100%;
+            height: 55px;
+            border: 1px solid #bde5ec;
+            border-radius: 11px;
+            padding: 0 15px;
+            outline: none;
+            color: #17354a;
+            font-size: 14px;
+            margin-bottom: 22px;
+        }
+
+        .age-input:focus {
+            border-color: #0cc0d8;
+            box-shadow: 0 0 0 4px rgba(0, 190, 210, 0.10);
+        }
+
+        .symptom-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 26px;
+        }
+
+        .symptom {
+            position: relative;
+        }
+
+        .symptom input {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .symptom label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 52px;
+            padding: 10px;
+            border: 1px solid #cde7ed;
+            border-radius: 10px;
+            background: #fbfeff;
+            color: #06213a;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+
+        .symptom label:hover {
+            border-color: #0bbbd3;
+            transform: translateY(-2px);
+        }
+
+        .symptom input:checked+label {
+            background: linear-gradient(135deg, #08b9d1, #16d1b1);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 7px 18px rgba(0, 190, 210, 0.18);
+        }
+
+        .analyze-button {
+            padding: 14px 25px;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: 700;
+            background: linear-gradient(135deg, #08b9d2, #13d1b1);
+            transition: 0.3s;
+        }
+
+        .analyze-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 190, 210, 0.20);
+        }
+
+        #result {
+            display: none;
+            margin-top: 30px;
+            padding: 25px;
+            border: 1px solid #bfecef;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #effcfd, #f1fffa);
+        }
+
+        .result-item {
+            padding: 17px;
+            margin-top: 12px;
+            border-radius: 10px;
+            background: white;
+            border-left: 4px solid #08b9d2;
+        }
+
+        .result-item strong {
+            color: #0085a3;
+        }
+
+        .result-item p {
+            color: #607d9b;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .disclaimer {
+            margin-top: 15px;
+            padding: 13px;
+            border-radius: 9px;
+            background: #fff8e7;
+            border: 1px solid #f2d48b;
+            color: #73530a;
+            font-size: 12px;
+        }
+
+        /* =====================================================
+           MEDICAL IMAGE UPLOAD
+        ===================================================== */
+
+        .image-upload-box {
+            margin: 0 0 24px;
+            padding: 18px;
+            border: 2px dashed #b9e5ec;
+            border-radius: 14px;
+            background: #f8fdfe;
+            transition: .25s;
+        }
+
+        .image-upload-box:hover {
+            border-color: #08b9d3;
+            background: #f2fcfd;
+        }
+
+        .image-upload-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            color: #08243b;
+            font-weight: 700;
+        }
+
+        .image-upload-label span {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 11px;
+            background: #e2fafd;
+            font-size: 22px;
+        }
+
+        .image-upload-help {
+            margin: 7px 0 0 56px;
+            color: #607d9b;
+            font-size: 12px;
+        }
+
+        #medicalImage {
+            display: none;
+        }
+
+        .image-preview {
+            display: none;
+            margin-top: 15px;
+            position: relative;
+            max-width: 360px;
+        }
+
+        .image-preview img {
+            width: 100%;
+            max-height: 260px;
+            object-fit: contain;
+            border-radius: 12px;
+            border: 1px solid #cde7ed;
+            background: white;
+        }
+
+        .remove-image {
+            margin-top: 8px;
+            padding: 7px 11px;
+            border: 1px solid #fecaca;
+            border-radius: 8px;
+            background: #fff5f5;
+            color: #dc2626;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .upload-status {
+            margin-top: 8px;
+            color: #0085a3;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .chat-attachment-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .attach-button {
+            padding: 9px 12px;
+            border: 1px solid #cde6eb;
+            border-radius: 9px;
+            background: white;
+            color: #087d96;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        #chatImage {
+            display: none;
+        }
+
+        .chat-image-preview {
+            display: none;
+            max-width: 90px;
+            max-height: 70px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #cde7ed;
+        }
+
+        .bubble img.chat-attached-image {
+            display: block;
+            max-width: 220px;
+            max-height: 180px;
+            margin-top: 8px;
+            border-radius: 9px;
+            border: 1px solid rgba(0, 0, 0, .08);
+        }
+
+        .doctor-thinking {
+            opacity: .75;
+            font-style: italic;
+        }
+
+        .doctor-advice {
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: 10px;
+            background: #f5fcfd;
+            border: 1px solid #cdebf0;
+        }
+
+        .doctor-advice-title {
+            color: #087d96;
+            font-weight: 800;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .doctor-advice ul {
+            margin: 0;
+            padding-left: 18px;
+            color: #4f6d82;
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        .doctor-advice .follow-up {
+            margin-top: 8px;
+            padding: 8px;
+            border-radius: 7px;
+            background: #eef9fb;
+            color: #086b80;
+            font-size: 11px;
+        }
+
+        /* =====================================================
+           DOCTORS
+        ===================================================== */
+
+        .doctors {
+            background: white;
+        }
+
+        .doctor-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .doctor-card {
+            overflow: hidden;
+            border: 1px solid #d7ebef;
+            border-radius: 17px;
+            background: white;
+            box-shadow: var(--shadow);
+            transition: 0.3s;
+        }
+
+        .doctor-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .doctor-photo {
+            height: 190px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 70px;
+            background: linear-gradient(135deg, #e1faff, #e7fff8);
+        }
+
+        .doctor-info {
+            padding: 22px;
+        }
+
+        .doctor-info h3 {
+            font-size: 18px;
+            margin-bottom: 3px;
+        }
+
+        .speciality {
+            color: #0089a8;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .rating {
+            color: #f5a400;
+            font-size: 13px;
+            margin: 8px 0;
+        }
+
+        .doctor-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #10a978;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+        }
+
+        /* =====================================================
+           PRIVATE CHAT
+        ===================================================== */
+
+        .chat-section {
+            background: #f1fbfc;
+        }
+
+        .chat-layout {
+            max-width: 1050px;
+            min-height: 620px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            overflow: hidden;
+            background: white;
+            border: 1px solid #d4eaf0;
+            border-radius: 18px;
+            box-shadow: var(--shadow);
+        }
+
+        .chat-sidebar {
+            background: #f8fcfd;
+            border-right: 1px solid #dcecf0;
+        }
+
+        .chat-sidebar-title {
+            padding: 20px;
+            border-bottom: 1px solid #dcecf0;
+        }
+
+        .chat-sidebar-title h3 {
+            font-size: 17px;
+        }
+
+        .chat-sidebar-title p {
+            color: #607d9b;
+            font-size: 12px;
+        }
+
+        .chat-doctor {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #e4f0f3;
+        }
+
+        .chat-doctor:hover,
+        .chat-doctor.active {
+            background: #e7fafc;
+        }
+
+        .chat-avatar {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #08b9d2, #13d2b0);
+            color: white;
+            font-size: 20px;
+        }
+
+        .chat-doctor strong {
+            display: block;
+            font-size: 13px;
+        }
+
+        .chat-doctor small {
+            color: #607d9b;
+            font-size: 11px;
+        }
+
+        .chat-window {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 20px;
+            border-bottom: 1px solid #dcecf0;
+        }
+
+        .chat-header strong {
+            display: block;
+        }
+
+        .online {
+            color: #10b981;
+            font-size: 11px;
+        }
+
+        .messages {
+            flex: 1;
+            min-height: 400px;
+            padding: 22px;
+            overflow-y: auto;
+            background: #f8fcfd;
+        }
+
+        .message {
+            display: flex;
+            margin-bottom: 14px;
+        }
+
+        .message.doctor {
+            justify-content: flex-start;
+        }
+
+        .message.patient {
+            justify-content: flex-end;
+        }
+
+        .bubble {
+            max-width: 70%;
+            padding: 11px 15px;
+            border-radius: 14px;
+            font-size: 13px;
+        }
+
+        .message.doctor .bubble {
+            background: white;
+            border: 1px solid #d8ebef;
+            border-bottom-left-radius: 4px;
+        }
+
+        .message.patient .bubble {
+            color: white;
+            background: linear-gradient(135deg, #08b9d2, #13d2b0);
+            border-bottom-right-radius: 4px;
+        }
+
+        .time {
+            display: block;
+            font-size: 9px;
+            text-align: right;
+            opacity: 0.7;
+            margin-top: 4px;
+        }
+
+        .chat-input {
+            padding: 14px;
+            border-top: 1px solid #dcecf0;
+        }
+
+        .chat-form {
+            display: flex;
+            gap: 8px;
+        }
+
+        .chat-form input {
+            flex: 1;
+            border: 1px solid #cde6eb;
+            border-radius: 9px;
+            padding: 12px;
+            outline: none;
+        }
+
+        .send-button {
+            width: 48px;
+            border: none;
+            border-radius: 9px;
+            color: white;
+            background: linear-gradient(135deg, #08b9d2, #13d2b0);
+        }
+
+        .privacy {
+            text-align: center;
+            padding: 8px;
+            font-size: 10px;
+            color: #607d9b;
+            background: #edf9fb;
+        }
+
+        /* =====================================================
+           APPOINTMENT
+        ===================================================== */
+
+        .appointment {
+            background: white;
+        }
+
+        .appointment-box {
+            max-width: 850px;
+            margin: auto;
+            padding: 32px;
+            border: 1px solid #d7ebef;
+            border-radius: 18px;
+            background: #f8fcfd;
+            box-shadow: var(--shadow);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 17px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cde7ec;
+            border-radius: 9px;
+            outline: none;
+            background: white;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        /* =====================================================
+           CONTACT
+        ===================================================== */
+
+        .contact {
+            background: #f1fbfc;
+        }
+
+        .contact-box {
+            max-width: 900px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .contact-card {
+            padding: 28px;
+            background: white;
+            border: 1px solid #d6ebef;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+        }
+
+        .contact-card h3 {
+            margin-bottom: 10px;
+        }
+
+        .contact-card p {
+            color: #607d9b;
+            font-size: 14px;
+        }
+
+        .contact-info {
+            display: grid;
+            gap: 13px;
+            margin-top: 20px;
+        }
+
+        .contact-info div {
+            padding: 13px;
+            border-radius: 9px;
+            background: #f1fafc;
+            font-size: 13px;
+        }
+
+        /* =====================================================
+           EMERGENCY
+        ===================================================== */
+
+        .emergency {
+            padding: 24px 0;
+            background: #fff5f5;
+        }
+
+        .emergency-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 24px;
+            border: 1px solid #fecaca;
+            border-radius: 14px;
+            background: white;
+        }
+
+        .emergency-box h3 {
+            color: #dc2626;
+            margin-bottom: 4px;
+        }
+
+        .emergency-box p {
+            color: #607d9b;
+            font-size: 13px;
+        }
+
+        .emergency-button {
+            flex-shrink: 0;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 9px;
+            background: #ef4444;
+            color: white;
+            font-weight: 700;
+        }
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+            padding: 40px 0 25px;
+            background: #071c2c;
+            color: #8ca9b8;
+            text-align: center;
+        }
+
+        footer h2 {
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        footer p {
+            font-size: 13px;
+        }
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media(max-width: 950px) {
+            .hero-inner {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-description {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .service-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .doctor-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .chat-layout {
+                grid-template-columns: 250px 1fr;
+            }
+        }
+
+        @media(max-width: 700px) {
+            .header-inner {
+                height: auto;
+                min-height: 78px;
+                padding: 12px 0;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .nav {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav a {
+                font-size: 12px;
+            }
+
+            .hero {
+                padding: 70px 0;
+            }
+
+            .hero h1 {
+                font-size: 43px;
+            }
+
+            .service-grid,
+            .doctor-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .symptom-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .chat-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .chat-sidebar {
+                display: none;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+            .contact-box {
+                grid-template-columns: 1fr;
+            }
+
+            .emergency-box {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media(max-width:450px) {
+            .symptom-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .assistant-card,
+            .checker,
+            .appointment-box {
+                padding: 20px;
+            }
+        }
+    </style>
+
 </head>
 
+
 <body>
-    <header class="site-header">
-        <div class="container">
-            <h1 class="logo">HealthCare Clinic</h1>
-            <nav>
-                <a href="#services">Services</a>
-                <a href="#doctors">Doctors</a>
-                <a href="#contact">Contact</a>
+
+
+    <!-- =====================================================
+     HEADER
+===================================================== -->
+
+    <header class="header">
+
+        <div class="container header-inner">
+
+            <a href="#home" class="logo">
+
+                <span class="logo-box">
+                    +
+                </span> MediCare
+
+            </a>
+
+
+            <nav class="nav">
+
+                <a href="#home">
+                    Home
+                </a>
+
+                <a href="#symptoms">
+                    Symptom Checker
+                </a>
+
+                <a href="#services">
+                    Services
+                </a>
+
+                <a href="#contact">
+                    Contact
+                </a>
+
             </nav>
+
         </div>
+
     </header>
 
-    <main>
-        <section class="hero">
-            <div class="container">
-                <h2>Quality care. Close to home.</h2>
-                <p>Book appointments, find providers, and get virtual care information.</p>
-                <a class="btn" href="#contact">Book Appointment</a>
+
+    <!-- =====================================================
+     HERO
+===================================================== -->
+
+    <section class="hero" id="home">
+
+        <div class="container hero-inner">
+
+
+            <div>
+
+                <span class="hero-badge">
+
+                    ✓ Smart Healthcare Assistant
+
+                </span>
+
+
+                <h1>
+
+                    Understand Your
+
+                    <span>
+                        Health Better
+                    </span>
+
+                </h1>
+
+
+                <p class="hero-description">
+
+                    Enter your symptoms and get educational information about possible health conditions, recommended next steps, and when you should consult a healthcare professional.
+
+                </p>
+
+
+                <a href="#symptoms" class="hero-button">
+
+                    Check My Symptoms
+
+                    <span>
+                        →
+                    </span>
+
+                </a>
+
             </div>
-        </section>
 
-        <section id="services" class="container services">
-            <h3>Our Services</h3>
-            <div class="grid">
-                <div class="card">
-                    <h4>Primary Care</h4>
-                    <p>Routine exams, preventive care and chronic disease management.</p>
+
+            <div class="assistant-card">
+
+                <div class="assistant-icon">
+                    ♥
                 </div>
-                <div class="card">
-                    <h4>Pediatrics</h4>
-                    <p>Comprehensive care for infants, children and adolescents.</p>
-                </div>
-                <div class="card">
-                    <h4>Telemedicine</h4>
-                    <p>Virtual visits for non-emergency conditions.</p>
-                </div>
+
+
+                <h2>
+                    Smart Health Assistant
+                </h2>
+
+
+                <p>
+
+                    A simple educational tool to help you understand common symptoms.
+
+                </p>
+
+
+                <ul class="assistant-list">
+
+                    <li>
+                        ✓ Select your symptoms
+                    </li>
+
+                    <li>
+                        ✓ Get possible conditions
+                    </li>
+
+                    <li>
+                        ✓ Understand warning signs
+                    </li>
+
+                    <li>
+                        ✓ Know when to contact a doctor
+                    </li>
+
+                </ul>
+
             </div>
-        </section>
 
-        <section id="doctors" class="container doctors">
-            <h3>Meet Our Doctors</h3>
-            <div class="grid">
-                <div class="card">
-                    <h4>Dr. A. Sharma</h4>
-                    <p>Family Medicine</p>
-                </div>
-                <div class="card">
-                    <h4>Dr. S. Patel</h4>
-                    <p>Pediatrics</p>
-                </div>
-                <div class="card">
-                    <h4>Dr. L. Gomez</h4>
-                    <p>Internal Medicine</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="container contact">
-            <h3>Book an Appointment</h3>
-            <form id="appointmentForm">
-                <label>Full name
-          <input type="text" name="name" required>
-        </label>
-                <label>Email
-          <input type="email" name="email" required>
-        </label>
-                <label>Preferred date
-          <input type="date" name="date">
-        </label>
-                <label>Notes
-          <textarea name="notes"></textarea>
-        </label>
-                <button class="btn" type="submit">Request Appointment</button>
-            </form>
-            <p class="note">This is a demo site — form submissions are handled locally.</p>
-        </section>
-    </main>
-
-    <footer class="site-footer">
-        <div class="container">
-            <p>&copy; 2026 HealthCare Clinic</p>
         </div>
+
+    </section>
+
+
+    <!-- =====================================================
+     SERVICES
+===================================================== -->
+
+    <section class="section services" id="services">
+
+        <div class="container">
+
+
+            <div class="section-header">
+
+                <div class="section-label">
+                    Our Services
+                </div>
+
+                <h2>
+                    Healthcare Made Simple
+                </h2>
+
+                <p>
+                    Tools and services designed to help patients understand and manage their healthcare journey.
+                </p>
+
+            </div>
+
+
+            <div class="service-grid">
+
+
+                <div class="service-card">
+
+                    <div class="service-icon">
+                        🩺
+                    </div>
+
+                    <h3>
+                        Symptom Analysis
+                    </h3>
+
+                    <p>
+                        Understand common health conditions that may be associated with selected symptoms.
+                    </p>
+
+                </div>
+
+
+                <div class="service-card">
+
+                    <div class="service-icon">
+                        👨‍⚕️
+                    </div>
+
+                    <h3>
+                        Doctor Consultation
+                    </h3>
+
+                    <p>
+                        Connect with qualified healthcare professionals for proper evaluation.
+                    </p>
+
+                </div>
+
+
+                <div class="service-card">
+
+                    <div class="service-icon">
+                        🗓️
+                    </div>
+
+                    <h3>
+                        Appointment Booking
+                    </h3>
+
+                    <p>
+                        Schedule appointments with doctors according to your healthcare needs.
+                    </p>
+
+                </div>
+
+
+                <div class="service-card">
+
+                    <div class="service-icon">
+                        📋
+                    </div>
+
+                    <h3>
+                        Health Information
+                    </h3>
+
+                    <p>
+                        Learn about symptoms, prevention, wellness and healthy lifestyle practices.
+                    </p>
+
+                </div>
+
+
+                <div class="service-card">
+
+                    <div class="service-icon">
+                        🔒
+                    </div>
+
+                    <h3>
+                        Patient Privacy
+                    </h3>
+
+                    <p>
+                        Health information should be handled securely and responsibly.
+                    </p>
+
+                </div>
+
+
+                <div class="service-card">
+
+                    <div class="service-icon">
+                        🚑
+                    </div>
+
+                    <h3>
+                        Emergency Guidance
+                    </h3>
+
+                    <p>
+                        Helps identify symptoms that may require urgent professional medical attention.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+     SYMPTOM CHECKER
+===================================================== -->
+
+    <section class="section symptoms" id="symptoms">
+
+        <div class="container">
+
+
+            <div class="section-header">
+
+                <div class="section-label">
+                    Smart Health Assistant
+                </div>
+
+                <h2>
+                    Check Your Symptoms
+                </h2>
+
+                <p>
+                    Select one or more symptoms below.
+                </p>
+
+            </div>
+
+
+            <div class="checker">
+
+
+                <div class="checker-title">
+
+                    <div class="checker-title-icon">
+                        ♥
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Symptom Checker
+                        </h3>
+
+                        <p>
+                            Select one or more symptoms below.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <label class="age-label" for="age">
+                    Your Age
+                </label>
+
+
+                <input class="age-input" type="number" id="age" min="1" max="120" placeholder="Enter your age">
+
+
+                <!-- Medical image upload -->
+                <div class="image-upload-box">
+                    <label class="image-upload-label" for="medicalImage">
+                        <span>🖼️</span>
+                        <div>
+                            Upload Medical Image
+                            <div class="image-upload-help">
+                                Optional: skin photo, wound photo, X-ray, scan, etc. PNG/JPG/WEBP up to 5 MB.
+                            </div>
+                        </div>
+                    </label>
+                    <input type="file" id="medicalImage" accept="image/png,image/jpeg,image/webp" onchange="handleMedicalImage(event)">
+
+                    <div class="image-preview" id="imagePreview">
+                        <img id="previewImage" alt="Selected medical image preview">
+                        <div class="upload-status" id="imageStatus"></div>
+                        <button type="button" class="remove-image" onclick="removeMedicalImage()">
+                            ✕ Remove Image
+                        </button>
+                    </div>
+                </div>
+
+                <div class="symptom-grid">
+
+
+                    <div class="symptom">
+
+                        <input type="checkbox" id="fever" value="fever">
+
+                        <label for="fever">
+                            🌡️ Fever
+                        </label>
+
+                    </div>
+
+
+                    <div class="symptom">
+
+                        <input type="checkbox" id="cough" value="cough">
+
+                        <label for="cough">
+                            🤧 Cough
+                        </label>
+
+                    </div>
+
+
+                    <div class="symptom">
+
+                        <input type="checkbox" id="throat" value="throat">
+
+                        <label for="throat">
+                            🗣️ Sore Throat
+                        </label>
+
+                    </div>
+
+
+                    <div class="symptom">
+
+                        <input type="checkbox" id="headache" value="headache">
+
+                        <label for="headache">
+                            🤕 Headache
+                        </label>
+
+                    </div>
+
+
+                    <div class="symptom">
+
+                        <input type="checkbox" id="runny" value="runny">
+
+                        <label for="runny">
+                            🤧 Runny Nose
+                        </label>
+
+                    </div>
+
+
+                    <div class="symptom">
+
+                        <input type="checkbox" id="fatigue" value="fatigue">
+
+                        <label for="fatigue">
+                            🥱 Fatigue
+                        </label>
+
+                    </div>
+
+
+                    <div class="symptom">
+
+                        <input type="checkbox" id="bodypain" value="bodypain">
+
+                        <label for="bodypain">
+                            💪 Body Pain
+                        </label>
+
+                    </div>
+
+
+                    <div class="symptom">
+
+                        <input type="checkbox" id="nausea" value="nausea">
+
+                        <label for="nausea">
+                            🤢 Nausea
+                        </label>
+
+                    </div>
+
+
+                    <div class="symptom">
+
+                        <input type="checkbox" id="vomiting" value="vomiting">
+
+                        <label for="vomiting">
+                            🤮 Vomiting
+                        </label>
+
+                    </div>
+
+
+                    <div class="symptom">
+
+                        <input type="checkbox" id="diarrhea" value="diarrhea">
+
+                        <label for="diarrhea">
+                            🚽 Diarrhea
+                        </label>
+
+                    </div>
+
+
+                    <div class="symptom">
+
+                        <input type="checkbox" id="stomach" value="stomach">
+
+                        <label for="stomach">
+                            🩺 Stomach Pain
+                        </label>
+
+                    </div>
+
+
+                    <div class="symptom">
+
+                        <input type="checkbox" id="chest" value="chest">
+
+                        <label for="chest">
+                            ❤️ Chest Pain
+                        </label>
+
+                    </div>
+
+
+                    <div class="symptom">
+
+                        <input type="checkbox" id="breathing" value="breathing">
+
+                        <label for="breathing">
+                            🫁 Breathing Difficulty
+                        </label>
+
+                    </div>
+
+
+                    <div class="symptom">
+
+                        <input type="checkbox" id="dizziness" value="dizziness">
+
+                        <label for="dizziness">
+                            🌀 Dizziness
+                        </label>
+
+                    </div>
+
+
+                    <div class="symptom">
+
+                        <input type="checkbox" id="rash" value="rash">
+
+                        <label for="rash">
+                            🔴 Skin Rash
+                        </label>
+
+                    </div>
+
+
+                </div>
+
+
+                <button class="analyze-button" onclick="checkSymptoms()">
+                    Analyze Symptoms
+                </button>
+
+
+                <div id="result"></div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+     DOCTORS
+===================================================== -->
+
+    <section class="section doctors" id="doctors">
+
+        <div class="container">
+
+
+            <div class="section-header">
+
+                <div class="section-label">
+                    Medical Professionals
+                </div>
+
+                <h2>
+                    Connect With Doctors
+                </h2>
+
+                <p>
+                    Get professional guidance through private communication.
+                </p>
+
+            </div>
+
+
+            <div class="doctor-grid">
+
+
+                <div class="doctor-card">
+
+                    <div class="doctor-photo">
+                        👨‍⚕️
+                    </div>
+
+                    <div class="doctor-info">
+
+                        <h3>
+                            Dr. Rahul Sharma
+                        </h3>
+
+                        <div class="speciality">
+                            General Physician
+                        </div>
+
+                        <div class="rating">
+                            ★★★★★ 4.9
+                        </div>
+
+                        <div class="doctor-status">
+
+                            <span class="status-dot"></span> Online
+
+                        </div>
+
+                        <button class="hero-button" onclick="openChat('Dr. Rahul Sharma')">
+                            💬 Start Chat
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="doctor-card">
+
+                    <div class="doctor-photo">
+                        👩‍⚕️
+                    </div>
+
+                    <div class="doctor-info">
+
+                        <h3>
+                            Dr. Priya Verma
+                        </h3>
+
+                        <div class="speciality">
+                            Internal Medicine
+                        </div>
+
+                        <div class="rating">
+                            ★★★★★ 4.8
+                        </div>
+
+                        <div class="doctor-status">
+
+                            <span class="status-dot"></span> Online
+
+                        </div>
+
+                        <button class="hero-button" onclick="openChat('Dr. Priya Verma')">
+                            💬 Start Chat
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="doctor-card">
+
+                    <div class="doctor-photo">
+                        👨‍⚕️
+                    </div>
+
+                    <div class="doctor-info">
+
+                        <h3>
+                            Dr. Arjun Mehta
+                        </h3>
+
+                        <div class="speciality">
+                            Dermatologist
+                        </div>
+
+                        <div class="rating">
+                            ★★★★☆ 4.7
+                        </div>
+
+                        <div class="doctor-status">
+
+                            <span class="status-dot"></span> Online
+
+                        </div>
+
+                        <button class="hero-button" onclick="openChat('Dr. Arjun Mehta')">
+                            💬 Start Chat
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+     PRIVATE CHAT
+===================================================== -->
+
+    <section class="section chat-section" id="chat">
+
+        <div class="container">
+
+
+            <div class="section-header">
+
+                <div class="section-label">
+                    Secure Communication
+                </div>
+
+                <h2>
+                    Private Chat With Doctor
+                </h2>
+
+                <p>
+                    Discuss your health concerns privately.
+                </p>
+
+            </div>
+
+
+            <div class="chat-layout">
+
+
+                <div class="chat-sidebar">
+
+                    <div class="chat-sidebar-title">
+
+                        <h3>
+                            My Doctors
+                        </h3>
+
+                        <p>
+                            Select a doctor to start chatting
+                        </p>
+
+                    </div>
+
+
+                    <div class="chat-doctor active" onclick="
+                        changeDoctor(
+                            'Dr. Rahul Sharma',
+                            this
+                        )
+                    ">
+
+                        <div class="chat-avatar">
+                            👨‍⚕️
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Dr. Rahul Sharma
+                            </strong>
+
+                            <small>
+                                General Physician
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="chat-doctor" onclick="
+                        changeDoctor(
+                            'Dr. Priya Verma',
+                            this
+                        )
+                    ">
+
+                        <div class="chat-avatar">
+                            👩‍⚕️
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Dr. Priya Verma
+                            </strong>
+
+                            <small>
+                                Internal Medicine
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="chat-doctor" onclick="
+                        changeDoctor(
+                            'Dr. Arjun Mehta',
+                            this
+                        )
+                    ">
+
+                        <div class="chat-avatar">
+                            👨‍⚕️
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Dr. Arjun Mehta
+                            </strong>
+
+                            <small>
+                                Dermatologist
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="chat-window">
+
+
+                    <div class="chat-header">
+
+                        <div class="chat-avatar">
+                            👨‍⚕️
+                        </div>
+
+                        <div>
+
+                            <strong id="doctorName">
+                                Dr. Rahul Sharma
+                            </strong>
+
+                            <span class="online">
+                                ● Online
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="messages" id="messages">
+
+                        <div class="message doctor">
+
+                            <div class="bubble">
+
+                                Hello! How can I help you today?
+
+                                <span class="time">
+                                    10:30 AM
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="message patient">
+
+                            <div class="bubble">
+
+                                I have been feeling tired and have a headache.
+
+                                <span class="time">
+                                    10:32 AM
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="message doctor">
+
+                            <div class="bubble">
+
+                                Please tell me how long you have had these symptoms.
+
+                                <span class="time">
+                                    10:33 AM
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="chat-input">
+
+                        <div style="font-size:11px;color:#607d9b;margin-bottom:8px;">
+                            💬 Send your symptoms or attach a medical image. The demo doctor will provide educational guidance.
+                        </div>
+
+                        <div class="chat-attachment-bar">
+                            <label class="attach-button" for="chatImage">📎 Attach Image</label>
+                            <input type="file" id="chatImage" accept="image/png,image/jpeg,image/webp" onchange="handleChatImage(event)">
+                            <img id="chatImagePreview" class="chat-image-preview" alt="Chat image preview">
+                            <button type="button" class="remove-image" id="removeChatImageBtn" style="display:none;" onclick="removeChatImage()">
+                                Remove
+                            </button>
+                        </div>
+
+                        <div class="chat-form">
+
+                            <input type="text" id="messageInput" placeholder="Type a private message...">
+
+                            <button class="send-button" onclick="sendMessage()">
+                                ➤
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="privacy">
+
+                        🔒 Demo private-chat interface. For real deployment, use secure authentication, encrypted storage/transit, access control, audit logs, and a protected backend. Uploaded medical images are only previewed locally in this demo.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+     APPOINTMENT
+===================================================== -->
+
+    <section class="section appointment" id="appointment">
+
+        <div class="container">
+
+
+            <div class="section-header">
+
+                <div class="section-label">
+                    Consultation
+                </div>
+
+                <h2>
+                    Book An Appointment
+                </h2>
+
+                <p>
+                    Schedule a consultation with a healthcare professional.
+                </p>
+
+            </div>
+
+
+            <div class="appointment-box">
+
+
+                <form id="appointmentForm" onsubmit="return bookAppointment(event)">
+
+                    <div class="form-grid">
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Patient Name
+                            </label>
+
+                            <input type="text" name="name" placeholder="Enter your name" required>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Phone Number
+                            </label>
+
+                            <input type="tel" name="phone" placeholder="Enter phone number" required>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Select Doctor
+                            </label>
+
+                            <select name="doctor" required>
+
+                                <option value="">
+                                    Choose Doctor
+                                </option>
+
+                                <option>
+                                    Dr. Rahul Sharma
+                                </option>
+
+                                <option>
+                                    Dr. Priya Verma
+                                </option>
+
+                                <option>
+                                    Dr. Arjun Mehta
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Appointment Date
+                            </label>
+
+                            <input type="date" name="date" required>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Appointment Time
+                            </label>
+
+                            <input type="time" name="time" required>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Consultation Type
+                            </label>
+
+                            <select name="consultationType" required>
+
+                                <option>
+                                    Private Chat
+                                </option>
+
+                                <option>
+                                    Video Consultation
+                                </option>
+
+                                <option>
+                                    In-Person Visit
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group full">
+
+                            <label>
+                                Reason For Visit
+                            </label>
+
+                            <textarea name="reason" placeholder="Describe your concern..."></textarea>
+
+                        </div>
+
+
+                        <div class="form-group full">
+
+                            <button class="hero-button" type="submit">
+                                📅 Confirm Appointment
+                            </button>
+
+                            <p id="appointmentStatus" role="status" aria-live="polite"></p>
+
+                        </div>
+
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+     CONTACT
+===================================================== -->
+
+    <section class="section contact" id="contact">
+
+        <div class="container">
+
+
+            <div class="section-header">
+
+                <div class="section-label">
+                    Contact
+                </div>
+
+                <h2>
+                    We're Here To Help
+                </h2>
+
+                <p>
+                    Have questions about the platform? Contact our support team.
+                </p>
+
+            </div>
+
+
+            <div class="contact-box">
+
+
+                <div class="contact-card">
+
+                    <h3>
+                        Contact Information
+                    </h3>
+
+                    <p>
+                        Our support team can help you with platform-related questions.
+                    </p>
+
+
+                    <div class="contact-info">
+
+                        <div>
+                            📧 support@medicare.example
+                        </div>
+
+                        <div>
+                            📞 +91 00000 00000
+                        </div>
+
+                        <div>
+                            📍 Healthcare Support Center
+                        </div>
+
+                        <div>
+                            🕐 Monday - Saturday
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="contact-card">
+
+                    <h3>
+                        Important
+                    </h3>
+
+                    <p>
+                        MediCare is designed as an educational healthcare portal. The symptom checker provides possible conditions only and does not provide a medical diagnosis.
+                    </p>
+
+                    <br>
+
+                    <p>
+                        Always consult a qualified healthcare professional for medical decisions.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+     EMERGENCY
+===================================================== -->
+
+    <section class="emergency">
+
+        <div class="container">
+
+            <div class="emergency-box">
+
+                <div>
+
+                    <h3>
+                        🚨 Medical Emergency?
+                    </h3>
+
+                    <p>
+                        Do not depend on the online symptom checker during an emergency. Seek immediate professional medical help.
+                    </p>
+
+                </div>
+
+
+                <button class="emergency-button" onclick="emergencyHelp()">
+                    Emergency Help
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+     FOOTER
+===================================================== -->
+
+    <footer>
+
+        <div class="container">
+
+            <h2>
+                MediCare
+            </h2>
+
+            <p>
+                Smart healthcare awareness and patient communication platform.
+            </p>
+
+            <p style="margin-top:10px;">
+                © 2026 MediCare | Educational Project
+            </p>
+
+        </div>
+
     </footer>
 
+
+    <!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+    <script>
+        /* =====================================================
+                           SYMPTOM CHECKER
+                        ===================================================== */
+
+        function checkSymptoms() {
+
+            const selected = [];
+
+
+            document
+                .querySelectorAll(
+                    ".symptom input:checked"
+                )
+                .forEach(
+                    function(item) {
+
+                        selected.push(
+                            item.value
+                        );
+
+                    }
+                );
+
+
+            const result =
+                document.getElementById(
+                    "result"
+                );
+
+            const medicalImageInput =
+                document.getElementById("medicalImage");
+
+            const hasMedicalImage =
+                medicalImageInput &&
+                medicalImageInput.files &&
+                medicalImageInput.files.length > 0;
+
+
+            if (selected.length === 0 && !hasMedicalImage) {
+
+                result.style.display =
+                    "block";
+
+                result.innerHTML = `
+
+            <h3>
+                Image received
+            </h3>
+
+            <p>
+                Your medical image has been uploaded successfully.
+                Add symptoms as well for a more useful preliminary assessment.
+            </p>
+
+            <div class="result-item">
+                <strong>Image status</strong>
+                <p>✓ Image attached and ready to share with a clinician.</p>
+            </div>
+
+            <div class="disclaimer">
+                The browser demo does not perform real medical image diagnosis.
+                A qualified clinician or validated medical-AI backend is required
+                for actual image interpretation.
+            </div>
+
+            <br>
+            <button class="hero-button" onclick="openChatFromChecker()">
+                💬 Send Image To Doctor
+            </button>
+
+        `;
+
+                return;
+            }
+
+
+            /* Emergency symptoms */
+
+            if (
+                selected.includes("chest") ||
+                selected.includes("breathing")
+            ) {
+
+                result.style.display =
+                    "block";
+
+
+                result.innerHTML = `
+
+            <h3
+                style="
+                    color:#ef4444;
+                    margin-bottom:10px;
+                "
+            >
+                ⚠️ Seek urgent medical attention
+            </h3>
+
+
+            <div
+                class="result-item"
+                style="
+                    border-left-color:#ef4444;
+                "
+            >
+
+                <strong>
+                    Important warning
+                </strong>
+
+                <p>
+                    Chest pain or significant breathing
+                    difficulty can sometimes be associated
+                    with serious medical conditions.
+                </p>
+
+                <p>
+                    Do not rely on this symptom checker.
+                    Seek urgent professional medical
+                    evaluation, especially if symptoms
+                    are severe, sudden or worsening.
+                </p>
+
+            </div>
+
+
+            <div class="disclaimer">
+
+                This tool cannot determine whether
+                a medical emergency is occurring.
+
+            </div>
+
+        `;
+
+                result.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+
+                return;
+            }
+
+
+            /* Educational database */
+
+            const conditions = [
+
+                {
+                    name: "Common Cold / Viral Respiratory Infection",
+
+                    symptoms: [
+                        "cough",
+                        "runny",
+                        "throat",
+                        "headache",
+                        "fatigue"
+                    ],
+
+                    minimum: 2,
+
+                    advice: "These symptoms can occur with common viral respiratory infections. Rest and hydration may be helpful."
+                },
+
+
+                {
+                    name: "Influenza-like Illness",
+
+                    symptoms: [
+                        "fever",
+                        "cough",
+                        "headache",
+                        "fatigue",
+                        "bodypain"
+                    ],
+
+                    minimum: 3,
+
+                    advice: "Fever, body pain, fatigue and respiratory symptoms can occur with influenza-like illnesses."
+                },
+
+
+                {
+                    name: "Gastrointestinal Infection",
+
+                    symptoms: [
+                        "nausea",
+                        "vomiting",
+                        "diarrhea",
+                        "stomach",
+                        "fever"
+                    ],
+
+                    minimum: 2,
+
+                    advice: "These symptoms can occur with gastrointestinal infections. Hydration may be important."
+                },
+
+
+                {
+                    name: "Allergy-related Symptoms",
+
+                    symptoms: [
+                        "runny",
+                        "rash",
+                        "throat"
+                    ],
+
+                    minimum: 2,
+
+                    advice: "Runny nose, throat irritation and some skin symptoms can occur with allergies."
+                },
+
+
+                {
+                    name: "Possible Viral Illness",
+
+                    symptoms: [
+                        "fever",
+                        "fatigue",
+                        "headache",
+                        "bodypain",
+                        "cough"
+                    ],
+
+                    minimum: 2,
+
+                    advice: "Several viral illnesses can cause these symptoms. Symptoms alone cannot identify the exact cause."
+                },
+
+
+                {
+                    name: "Possible Dehydration / Fluid Loss",
+
+                    symptoms: [
+                        "dizziness",
+                        "fatigue",
+                        "headache",
+                        "vomiting",
+                        "diarrhea"
+                    ],
+
+                    minimum: 2,
+
+                    advice: "Vomiting or diarrhea may contribute to fluid loss and dizziness."
+                }
+
+            ];
+
+
+            let matches = [];
+
+
+            conditions.forEach(
+                function(condition) {
+
+                    const matched =
+                        condition.symptoms.filter(
+                            function(symptom) {
+
+                                return selected.includes(
+                                    symptom
+                                );
+
+                            }
+                        );
+
+
+                    if (
+                        matched.length >=
+                        condition.minimum
+                    ) {
+
+                        const score =
+                            Math.round(
+                                (
+                                    matched.length /
+                                    condition.symptoms.length
+                                ) * 100
+                            );
+
+
+                        matches.push({
+
+                            name: condition.name,
+
+                            score: score,
+
+                            advice: condition.advice
+
+                        });
+
+                    }
+
+                }
+            );
+
+
+            matches.sort(
+                function(a, b) {
+
+                    return b.score - a.score;
+
+                }
+            );
+
+
+            result.style.display =
+                "block";
+
+
+            if (matches.length === 0) {
+
+                result.innerHTML = `
+
+            <h3>
+                No strong match found
+            </h3>
+
+            <p>
+                The selected symptoms do not produce
+                a strong match in this educational
+                database.
+            </p>
+
+            <div class="disclaimer">
+
+                This does not mean that you are healthy
+                or unhealthy. Symptoms can have many
+                different causes.
+
+            </div>
+
+        `;
+
+                return;
+            }
+
+
+            let html = `
+
+        <h3>
+            Possible Conditions
+        </h3>
+
+        <p
+            style="
+                color:#607d9b;
+                margin-top:5px;
+            "
+        >
+            These are educational possibilities,
+            not a medical diagnosis.
+        </p>
+
+    `;
+
+
+            matches
+                .slice(0, 3)
+                .forEach(
+                    function(match, index) {
+
+                        html += `
+
+                    <div class="result-item">
+
+                        <strong>
+                            ${index + 1}.
+                            ${match.name}
+                        </strong>
+
+                        <p>
+                            Symptom pattern:
+                            ${match.score}%
+                        </p>
+
+                        <p>
+                            ${match.advice}
+                        </p>
+
+                    </div>
+
+                `;
+
+                    }
+                );
+
+
+            html += `
+
+        <div class="disclaimer">
+
+            ⚠️ <strong>Medical Disclaimer:</strong>
+            This symptom checker is for educational
+            awareness only. It does not diagnose diseases
+            and should not replace a qualified healthcare
+            professional.
+
+        </div>
+
+        <br>
+
+        <button
+            class="hero-button"
+            onclick="openChatFromChecker()"
+        >
+            💬 Discuss With Doctor
+        </button>
+
+    `;
+
+
+            result.innerHTML =
+                html;
+
+
+            result.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
+        }
+
+
+        /* =====================================================
+           CHAT
+        ===================================================== */
+
+        function sendMessage() {
+            const input = document.getElementById("messageInput");
+            const text = input.value.trim();
+            const messages = document.getElementById("messages");
+
+            const chatImage = document.getElementById("chatImage");
+            const hasImage = chatImage && chatImage.files && chatImage.files.length > 0;
+            const imageFile = hasImage ? chatImage.files[0] : null;
+
+            if (!text && !hasImage) return;
+
+            const time = new Date().toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit"
+            });
+
+            const message = document.createElement("div");
+            message.className = "message patient";
+
+            let imageHTML = "";
+            if (hasImage) {
+                const imageURL = URL.createObjectURL(imageFile);
+                imageHTML = `
+                    <img class="chat-attached-image"
+                         src="${imageURL}"
+                         alt="Patient uploaded medical image">
+                `;
+            }
+
+            message.innerHTML = `
+                <div class="bubble">
+                    ${text ? escapeHTML(text) : "Medical image attached."}
+                    ${imageHTML}
+                    <span class="time">${time}</span>
+                </div>
+            `;
+
+            messages.appendChild(message);
+            input.value = "";
+            messages.scrollTop = messages.scrollHeight;
+
+            // Capture details before clearing the attachment.
+            const doctorName = document.getElementById("doctorName").textContent;
+            const patientText = text.toLowerCase();
+
+            // Demo doctor response — replace with a real secure backend/API
+            // for an actual doctor consultation.
+            setTimeout(function() {
+                const doctorMessage = document.createElement("div");
+                doctorMessage.className = "message doctor";
+
+                let response = getDoctorResponse(patientText, hasImage);
+                const adviceHTML = buildDoctorAdviceHTML(patientText, hasImage);
+
+                doctorMessage.innerHTML = `
+                    <div class="bubble">
+                        <strong>${escapeHTML(doctorName)}</strong><br>
+                        ${escapeHTML(response)}
+                        ${adviceHTML}
+                        <span class="time">${new Date().toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit"
+                        })}</span>
+                    </div>
+                `;
+
+                messages.appendChild(doctorMessage);
+                messages.scrollTop = messages.scrollHeight;
+            }, 1400);
+
+            removeChatImage();
+        }
+
+        function getDoctorAdvice(text, hasImage) {
+            let advice = {
+                title: "General Doctor Advice",
+                points: [
+                    "Keep track of your symptoms and when they started.",
+                    "Share your complete medical history and current medicines with a qualified clinician.",
+                    "Do not start, stop, or change prescription medicines based only on this demo chat."
+                ],
+                followUp: "If symptoms persist, worsen, or concern you, arrange a consultation with a qualified healthcare professional."
+            };
+
+            if (
+                text.includes("chest pain") ||
+                text.includes("breathing") ||
+                text.includes("shortness of breath") ||
+                text.includes("difficulty breathing")
+            ) {
+                advice = {
+                    title: "Urgent Safety Advice",
+                    points: [
+                        "Do not rely on the online checker for chest pain or significant breathing difficulty.",
+                        "Stop strenuous activity and seek urgent professional assessment if symptoms are severe, sudden, or worsening.",
+                        "If there is fainting, severe weakness, blue lips, confusion, or severe breathing difficulty, seek emergency medical help immediately."
+                    ],
+                    followUp: "Urgent symptoms should be assessed in person rather than managed through this chat."
+                };
+            } else if (
+                text.includes("fever") ||
+                text.includes("cough") ||
+                text.includes("cold")
+            ) {
+                advice = {
+                    title: "Respiratory Symptom Advice",
+                    points: [
+                        "Rest and maintain adequate fluid intake if you can drink normally.",
+                        "Monitor your temperature and whether symptoms are improving or worsening.",
+                        "Seek professional advice if symptoms are severe, persistent, or associated with breathing difficulty."
+                    ],
+                    followUp: "A clinician can decide whether an examination or further testing is needed."
+                };
+            } else if (
+                text.includes("headache") ||
+                text.includes("dizziness")
+            ) {
+                advice = {
+                    title: "Headache / Dizziness Advice",
+                    points: [
+                        "Rest safely and avoid driving or risky activities if you feel dizzy.",
+                        "Note the onset, severity, duration, and any associated symptoms.",
+                        "Seek urgent assessment for sudden severe headache, fainting, new weakness, speech/vision changes, or confusion."
+                    ],
+                    followUp: "Persistent or recurrent symptoms should be reviewed by a qualified clinician."
+                };
+            } else if (
+                text.includes("stomach") ||
+                text.includes("vomit") ||
+                text.includes("diarrhea") ||
+                text.includes("nausea")
+            ) {
+                advice = {
+                    title: "Digestive Symptom Advice",
+                    points: [
+                        "Take fluids in small, frequent amounts if you can keep them down.",
+                        "Monitor for worsening pain, dehydration, blood in vomit/stool, or persistent vomiting.",
+                        "Seek professional care if symptoms are severe or do not improve."
+                    ],
+                    followUp: "A clinician can assess the cause and whether testing or treatment is required."
+                };
+            } else if (
+                text.includes("rash") ||
+                text.includes("itch") ||
+                text.includes("skin") ||
+                text.includes("wound") ||
+                text.includes("spot") ||
+                hasImage
+            ) {
+                advice = {
+                    title: "Skin / Image Review Advice",
+                    points: [
+                        "Keep the affected area clean and avoid scratching or applying unknown medicines.",
+                        "Monitor changes in size, colour, pain, swelling, discharge, or spreading.",
+                        "A medical image should be reviewed by a qualified clinician for diagnosis; this demo cannot reliably diagnose an image."
+                    ],
+                    followUp: "Seek prompt in-person care if the area is rapidly changing, severely painful, infected-looking, or associated with fever."
+                };
+            }
+
+            return advice;
+        }
+
+        function buildDoctorAdviceHTML(text, hasImage) {
+            const advice = getDoctorAdvice(text, hasImage);
+
+            return `
+                <div class="doctor-advice">
+                    <div class="doctor-advice-title">🩺 Doctor's Advice</div>
+                    <ul>
+                        ${advice.points.map(point => `<li>${escapeHTML(point)}</li>`).join("")}
+                    </ul>
+                    <div class="follow-up">
+                        <strong>Follow-up:</strong> ${escapeHTML(advice.followUp)}
+                    </div>
+                </div>
+            `;
+        }
+
+        function getDoctorResponse(text, hasImage) {
+            if (hasImage && (
+                    text.includes("rash") ||
+                    text.includes("skin") ||
+                    text.includes("wound") ||
+                    text.includes("spot")
+                )) {
+                return "I can see that you have attached a medical image. Please note that an image alone is not enough for a reliable diagnosis. If the area is painful, rapidly spreading, bleeding, infected-looking, or associated with fever, please arrange an in-person medical evaluation.";
+            }
+
+            if (hasImage && (
+                    text.includes("xray") ||
+                    text.includes("x-ray") ||
+                    text.includes("chest")
+                )) {
+                return "I received the uploaded image. A proper X-ray interpretation requires a qualified clinician/radiologist and the full clinical history. Please do not rely on this chat for a final diagnosis.";
+            }
+
+            if (
+                text.includes("chest pain") ||
+                text.includes("breathing") ||
+                text.includes("shortness of breath") ||
+                text.includes("difficulty breathing")
+            ) {
+                return "Chest pain or significant breathing difficulty can require urgent assessment. If the symptoms are severe, sudden, worsening, or associated with fainting, blue lips, heavy sweating, or severe weakness, seek emergency medical care now.";
+            }
+
+            if (
+                text.includes("fever") ||
+                text.includes("cough") ||
+                text.includes("cold")
+            ) {
+                return "Your symptoms may occur with several common infections, but I cannot confirm the cause from chat alone. Please monitor your temperature, stay hydrated, and seek medical advice if symptoms are severe, persistent, or getting worse.";
+            }
+
+            if (
+                text.includes("headache") ||
+                text.includes("dizziness")
+            ) {
+                return "Headache or dizziness can have many causes. Please tell me when it started, how severe it is, and whether you have vomiting, vision changes, weakness, fainting, or other new symptoms. Seek urgent care for sudden severe headache or neurological symptoms.";
+            }
+
+            if (
+                text.includes("stomach") ||
+                text.includes("vomit") ||
+                text.includes("diarrhea") ||
+                text.includes("nausea")
+            ) {
+                return "These symptoms can have several causes. Focus on fluids if you can keep them down and monitor for worsening pain, blood in vomit/stool, high fever, confusion, or signs of dehydration. A clinician should evaluate persistent or severe symptoms.";
+            }
+
+            if (text.includes("rash") || text.includes("itch")) {
+                return "Skin symptoms have many possible causes. Avoid scratching or applying unknown medicines, and arrange a clinician review if the rash is spreading, painful, blistering, associated with fever, or causing breathing/swelling problems.";
+            }
+
+            return "Thank you for sharing your concern. I recommend discussing your symptoms and medical history with a qualified healthcare professional. If you develop severe or rapidly worsening symptoms, seek urgent medical care.";
+        }
+
+        /* =====================================================
+           MEDICAL IMAGE HANDLING
+        ===================================================== */
+
+        function validateImage(file) {
+            if (!file) return false;
+
+            const allowed = ["image/jpeg", "image/png", "image/webp"];
+            if (!allowed.includes(file.type)) {
+                alert("Please upload a JPG, PNG, or WEBP image.");
+                return false;
+            }
+
+            if (file.size > 5 * 1024 * 1024) {
+                alert("Image size must be 5 MB or less.");
+                return false;
+            }
+
+            return true;
+        }
+
+        function handleMedicalImage(event) {
+            const file = event.target.files[0];
+            if (!validateImage(file)) {
+                event.target.value = "";
+                return;
+            }
+
+            const preview = document.getElementById("imagePreview");
+            const image = document.getElementById("previewImage");
+            const status = document.getElementById("imageStatus");
+
+            image.src = URL.createObjectURL(file);
+            status.textContent = `✓ ${file.name} attached (${Math.round(file.size / 1024)} KB)`;
+            preview.style.display = "block";
+        }
+
+        function removeMedicalImage() {
+            const input = document.getElementById("medicalImage");
+            const preview = document.getElementById("imagePreview");
+            const image = document.getElementById("previewImage");
+            const status = document.getElementById("imageStatus");
+
+            input.value = "";
+            image.src = "";
+            status.textContent = "";
+            preview.style.display = "none";
+        }
+
+        function handleChatImage(event) {
+            const file = event.target.files[0];
+            if (!validateImage(file)) {
+                event.target.value = "";
+                return;
+            }
+
+            const preview = document.getElementById("chatImagePreview");
+            const removeButton = document.getElementById("removeChatImageBtn");
+
+            preview.src = URL.createObjectURL(file);
+            preview.style.display = "block";
+            removeButton.style.display = "inline-block";
+        }
+
+        function removeChatImage() {
+            const input = document.getElementById("chatImage");
+            const preview = document.getElementById("chatImagePreview");
+            const removeButton = document.getElementById("removeChatImageBtn");
+
+            input.value = "";
+            preview.src = "";
+            preview.style.display = "none";
+            removeButton.style.display = "none";
+        }
+
+        /* =====================================================
+           CHANGE DOCTOR
+        ===================================================== */
+
+        function changeDoctor(name, clickedElement) {
+
+            document.getElementById(
+                    "doctorName"
+                ).textContent =
+                name;
+
+
+            document
+                .querySelectorAll(
+                    ".chat-doctor"
+                )
+                .forEach(
+                    function(item) {
+
+                        item.classList.remove(
+                            "active"
+                        );
+
+                    }
+                );
+
+
+            if (event.currentTarget) {
+
+                event.currentTarget
+                    .classList.add(
+                        "active"
+                    );
+
+            }
+
+
+            document.getElementById(
+                "messages"
+            ).innerHTML = `
+
+        <div class="message doctor">
+
+            <div class="bubble">
+
+                Hello! I am
+                ${escapeHTML(name)}.
+                How can I help you today?
+
+                <span class="time">
+                    Now
+                </span>
+
+            </div>
+
+        </div>
+
+    `;
+
+        }
+
+
+        /* =====================================================
+           OPEN CHAT
+        ===================================================== */
+
+        function openChat(name) {
+
+            document.getElementById(
+                    "doctorName"
+                ).textContent =
+                name;
+
+
+            document.getElementById(
+                "chat"
+            ).scrollIntoView({
+                behavior: "smooth"
+            });
+
+        }
+
+
+        /* =====================================================
+           CHAT FROM SYMPTOM RESULT
+        ===================================================== */
+
+        function openChatFromChecker() {
+
+            document.getElementById(
+                "chat"
+            ).scrollIntoView({
+                behavior: "smooth"
+            });
+
+        }
+
+
+        /* =====================================================
+           APPOINTMENT
+        ===================================================== */
+
+        /* =====================================================
+           EMERGENCY
+        ===================================================== */
+
+        function emergencyHelp() {
+
+            alert(
+                "If you are experiencing a medical emergency, seek immediate professional medical assistance or contact your local emergency service."
+            );
+
+        }
+
+
+        /* =====================================================
+           ESCAPE HTML
+        ===================================================== */
+
+        function escapeHTML(text) {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.textContent =
+                text;
+
+
+            return div.innerHTML;
+
+        }
+
+
+        /* =====================================================
+           ENTER KEY CHAT
+        ===================================================== */
+
+        document
+            .getElementById(
+                "messageInput"
+            )
+            .addEventListener(
+                "keydown",
+                function(event) {
+
+                    if (
+                        event.key === "Enter"
+                    ) {
+
+                        sendMessage();
+
+                    }
+
+                }
+            );
+    </script>
+
+
     <script src="js/main.js"></script>
+
 </body>
 
 </html>
