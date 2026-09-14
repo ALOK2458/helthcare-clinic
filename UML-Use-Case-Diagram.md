@@ -12,33 +12,31 @@ The current project uses the following actors and roles:
 
 ```mermaid
 flowchart LR
-    actorPatient[Patient]
-    actorStaff[Clinic Staff / Receptionist]
-    actorDev[Developer / Maintainer]
-    actorMonitor[Monitoring System]
+    P["Patient"]
+    S["Clinic Staff / Receptionist"]
+    D["Developer / Maintainer"]
+    M["Monitoring System"]
 
-    subgraph System[MEdicare Smart Health Assistance System]
-        UC1[UC1: Book Appointment]
-        UC2[UC2: Submit Appointment Request]
-        UC3[UC3: Validate Inputs]
-        UC4[UC4: Detect Scheduling Conflict]
-        UC5[UC5: Save Appointment]
-        UC6[UC6: Analyze No-show Risk]
-        UC7[UC7: Recommend Best Slots]
-        UC8[UC8: Recommend Doctors]
-        UC9[UC9: View Appointment Records]
-        UC10[UC10: Check System Health]
+    subgraph System["MEdicare Smart Health Assistance System"]
+        UC1["UC1: Book Appointment"]
+        UC2["UC2: Submit Appointment Request"]
+        UC3["UC3: Validate Inputs"]
+        UC4["UC4: Detect Scheduling Conflict"]
+        UC5["UC5: Save Appointment"]
+        UC6["UC6: Analyze No-show Risk"]
+        UC7["UC7: Recommend Best Slots"]
+        UC8["UC8: Recommend Doctors"]
+        UC9["UC9: View Appointment Records"]
+        UC10["UC10: Check System Health"]
     end
 
-    actorPatient --> UC1
-    actorPatient --> UC2
-
-    actorStaff --> UC9
-    actorStaff --> UC7
-    actorStaff --> UC8
-
-    actorDev --> UC10
-    actorMonitor --> UC10
+    P --> UC1
+    P --> UC2
+    S --> UC9
+    S --> UC7
+    S --> UC8
+    D --> UC10
+    M --> UC10
 
     UC1 --> UC2
     UC2 --> UC3
@@ -86,24 +84,24 @@ A developer or external monitoring service verifies that the Node.js service is 
 
 ```mermaid
 flowchart TD
-    A[Patient / User] -->|Appointment details| B[Web UI Form]
-    B -->|POST /api/appointments| C[Node.js Server]
-    C --> D{Validate input}
-    D -->|Invalid| E[400 Error Response]
-    D -->|Valid| F{Check conflict}
-    F -->|Conflict exists| G[409 Conflict Response]
-    F -->|No conflict| H[Save to data/appointments.json]
-    H --> I[ML Model Engine]
-    I --> J[No-show probability]
-    I --> K[Risk score]
-    I --> L[Confidence score]
-    C -->|Success response| M[Booking confirmation + ML results]
-    M --> N[Clinic Staff / Dashboard]
+    A["Patient / User"] -->|Appointment details| B["Web UI Form"]
+    B -->|POST /api/appointments| C["Node.js Server"]
+    C --> D{"Validate input"}
+    D -->|Invalid| E["400 Error Response"]
+    D -->|Valid| F{"Check conflict"}
+    F -->|Conflict exists| G["409 Conflict Response"]
+    F -->|No conflict| H["Save to data/appointments.json"]
+    H --> I["ML Model Engine"]
+    I --> J["No-show probability"]
+    I --> K["Risk score"]
+    I --> L["Confidence score"]
+    C -->|Success response| M["Booking confirmation + ML results"]
+    M --> N["Clinic Staff / Dashboard"]
 
-    O[Stored appointments] --> F
+    O["Stored appointments"] --> F
     O --> I
-    O --> P[Doctor and slot recommendation engine]
-    P --> Q[Recommended slots / doctor list]
+    O --> P["Doctor and slot recommendation engine"]
+    P --> Q["Recommended slots / doctor list"]
     Q --> M
 ```
 
