@@ -2,10 +2,20 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
+const {
+    NoShowPredictor,
+    AppointmentRiskScorer,
+    AppointmentRecommender
+} = require("./js/ml-models.js");
 
 const PORT = Number(process.env.PORT) || 3000;
 const ROOT = __dirname;
 const APPOINTMENTS_FILE = path.join(ROOT, "data", "appointments.json");
+
+// Initialize ML models
+const noShowPredictor = new NoShowPredictor();
+const riskScorer = new AppointmentRiskScorer();
+const recommender = new AppointmentRecommender();
 
 const contentTypes = {
     ".css": "text/css; charset=utf-8",
@@ -105,7 +115,7 @@ const server = http.createServer(async (request, response) => {
     if (request.method === "GET" && request.url === "/api/health") {
         sendJson(response, 200, {
             status: "ok",
-            service: "medicare-api"
+            service: "medicare-smart-health-assistence-api"
         });
         return;
     }
@@ -139,10 +149,21 @@ const server = http.createServer(async (request, response) => {
                 });
                 return;
             }
+
+            // ML Predictions
+            const allAppointments = readAppointments();
+            const noShowProbability = noShowPredictor.predict(appointment);
+            const riskScore = riskScorer.score(appointment, allAppointments);
+
             saveAppointment(appointment);
             sendJson(response, 201, {
                 message: "Appointment request received",
-                appointment
+                appointment,
+                ml: {
+                    noShowProbability: Math.round(noShowProbability * 100),
+                    riskScore: Math.round(riskScore * 100),
+                    confidence: Math.round((1 - noShowProbability) * 100)
+                }
             });
         } catch (error) {
             sendJson(response, 400, {
@@ -165,6 +186,104 @@ const server = http.createServer(async (request, response) => {
         return;
     }
 
+    // ML Endpoints
+    if (request.method === "POST" && request.url === "/api/ml/predict") {
+        try {
+            const body = JSON.parse(await readRequestBody(request));
+            const allAppointments = readAppointments();
+
+            const noShowProbability = noShowPredictor.predict(body);
+            const riskScore = riskScorer.score(body, allAppointments);
+
+            sendJson(response, 200, {
+                noShowProbability: Math.round(noShowProbability * 100),
+                riskScore: Math.round(riskScore * 100),
+                confidence: Math.round((1 - noShowProbability) * 100),
+                interpretation: {
+                    noShow: noShowProbability > 0.4 ? "high risk" : "low risk",
+                    priority: riskScore > 0.6 ? "urgent" : riskScore > 0.3 ? "moderate" : "routine"
+                }
+            });
+        } catch (error) {
+            sendJson(response, 400, {
+                error: "Invalid prediction request"
+            });
+        }
+        return;
+    }
+
+    if (request.method === "POST" && request.url === "/api/ml/recommend-slots") {
+        try {
+            const body = JSON.parse(await readRequestBody(request));
+            const allAppointments = readAppointments();
+
+            const recommendations = recommender.recommendBestSlots(body, allAppointments, 5);
+
+            sendJson(response, 200, {
+                recommendations
+            });
+        } catch (error) {
+            sendJson(response, 400, {
+                error: "Could not generate slot recommendations"
+            });
+        }
+        return;
+    }
+
+    if (request.method === "POST" && request.url === "/api/ml/recommend-doctors") {
+        try {
+            const body = JSON.parse(await readRequestBody(request));
+            const allAppointments = readAppointments();
+
+            const recommendations = recommender.recommendDoctors(body.consultationType, body.date, allAppointments, 4);
+
+            sendJson(response, 200, {
+                recommendations
+            });
+        } catch (error) {
+            sendJson(response, 400, {
+                error: "Could not generate doctor recommendations"
+            });
+        }
+        return;
+    }
+
+    if (request.method === "GET" && request.url.startsWith("/api/ml/analyze/")) {
+        try {
+            const appointmentId = request.url.replace("/api/ml/analyze/", "");
+            const allAppointments = readAppointments();
+            const appointment = allAppointments.find(a => a.id === appointmentId);
+
+            if (!appointment) {
+                sendJson(response, 404, {
+                    error: "Appointment not found"
+                });
+                return;
+            }
+
+            const noShowProbability = noShowPredictor.predict(appointment);
+            const riskScore = riskScorer.score(appointment, allAppointments);
+
+            sendJson(response, 200, {
+                appointmentId,
+                analysis: {
+                    noShowProbability: Math.round(noShowProbability * 100),
+                    riskScore: Math.round(riskScore * 100),
+                    confidence: Math.round((1 - noShowProbability) * 100),
+                    recommendations: {
+                        reminder: noShowProbability > 0.3 ? "Send reminder 24h before" : "Standard reminder",
+                        priority: riskScore > 0.6 ? "Schedule doctor confirmation call" : "Monitor"
+                    }
+                }
+            });
+        } catch (error) {
+            sendJson(response, 500, {
+                error: "Could not analyze appointment"
+            });
+        }
+        return;
+    }
+
     if (request.method === "GET") serveStatic(request, response);
     else sendJson(response, 405, {
         error: "Method not allowed"
@@ -172,5 +291,5 @@ const server = http.createServer(async (request, response) => {
 });
 
 server.listen(PORT, () => {
-    console.log(`MediCare is running at http://localhost:${PORT}`);
+    console.log(`MEdicare: a smart health assistence is running at http://localhost:${PORT}`);
 });

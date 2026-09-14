@@ -7,7 +7,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>MediCare - Smart Healthcare</title>
+    <title>MEdicare: a smart health assistence</title>
 
     <style>
         /* =====================================================
@@ -544,6 +544,45 @@
             font-size: 12px;
         }
 
+        .diet-chart-box {
+            margin-top: 18px;
+            padding: 18px;
+            border-radius: 12px;
+            background: #f7fdfc;
+            border: 1px solid #cfeef0;
+        }
+
+        .diet-chart-box h4 {
+            margin: 0 0 12px;
+            color: #08233d;
+            font-size: 18px;
+        }
+
+        .diet-chart-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .diet-item {
+            padding: 14px;
+            border-radius: 10px;
+            background: white;
+            border: 1px solid #dceff0;
+        }
+
+        .diet-item strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #0a3050;
+        }
+
+        .diet-item span {
+            color: #607d9b;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
         /* =====================================================
            MEDICAL IMAGE UPLOAD
         ===================================================== */
@@ -956,11 +995,86 @@
         }
 
         /* =====================================================
-           APPOINTMENT
+           APPOINTMENT ML PREDICTIONS
         ===================================================== */
 
-        .appointment {
+        .ml-predictions {
+            display: none;
+            margin-top: 28px;
+            padding: 22px;
+            border: 1px solid #c9e5ec;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #f0fbfd, #f3f9fb);
+        }
+
+        .ml-predictions.show {
+            display: block;
+        }
+
+        .ml-section-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #0a3050;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ml-metric {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px;
+            margin-bottom: 12px;
             background: white;
+            border-radius: 9px;
+            border-left: 4px solid #08b9d3;
+        }
+
+        .ml-metric-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #0a3050;
+        }
+
+        .ml-metric-value {
+            font-size: 18px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #08b9d3, #13d2b0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .ml-metric.risk-high {
+            border-left-color: #ef4444;
+        }
+
+        .ml-metric.risk-medium {
+            border-left-color: #f59e0b;
+        }
+
+        .ml-metric.risk-low {
+            border-left-color: #10b981;
+        }
+
+        .ml-recommendations {
+            margin-top: 16px;
+            padding: 14px;
+            background: #f8fcfd;
+            border-radius: 9px;
+            border-left: 4px solid #0099bb;
+        }
+
+        .ml-recommendations p {
+            font-size: 13px;
+            color: #607d9b;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .ml-recommendations strong {
+            color: #0a3050;
         }
 
         .appointment-box {
@@ -1008,6 +1122,33 @@
         .form-group textarea {
             min-height: 100px;
             resize: vertical;
+        }
+
+        .appointment-status {
+            margin-top: 16px;
+            padding: 16px;
+            border-radius: 9px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 13px;
+        }
+
+        .appointment-status.success {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            color: #15803d;
+        }
+
+        .appointment-status.success strong {
+            font-size: 14px;
+            color: #16a34a;
+        }
+
+        .appointment-status.error {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #991b1b;
         }
 
         /* =====================================================
@@ -1241,7 +1382,7 @@
 
                 <span class="logo-box">
                     +
-                </span> MediCare
+                </span> MEdicare
 
             </a>
 
@@ -1250,6 +1391,10 @@
 
                 <a href="#home">
                     Home
+                </a>
+
+                <a href="diet.html">
+                    Diet
                 </a>
 
                 <a href="#symptoms">
@@ -1307,15 +1452,25 @@
                 </p>
 
 
-                <a href="#symptoms" class="hero-button">
+                <div style="display: flex; gap: 14px; flex-wrap: wrap;">
 
-                    Check My Symptoms
+                    <a href="#symptoms" class="hero-button">
 
-                    <span>
-                        →
-                    </span>
+                        Check My Symptoms
 
-                </a>
+                        <span>
+                            →
+                        </span>
+
+                    </a>
+
+                    <a href="diet.html" class="hero-button" style="background: transparent; border: 1px solid rgba(255,255,255,0.3);">
+
+                        View Diet Plans
+
+                    </a>
+
+                </div>
 
             </div>
 
@@ -1761,6 +1916,63 @@
 
 
                 <div id="result"></div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+     DIET CHART
+===================================================== -->
+
+    <section class="section diet-chart" id="diet-chart">
+
+        <div class="container">
+
+            <div class="section-header">
+
+                <div class="section-label">
+                    Nutrition Support
+                </div>
+
+                <h2>
+                    Diet Chart
+                </h2>
+
+                <p>
+                    Simple food guidance based on common health conditions.
+                </p>
+
+            </div>
+
+            <div class="checker" style="max-width: 980px;">
+
+                <div class="diet-chart-grid">
+
+                    <div class="diet-item">
+                        <strong>Cold / Flu</strong>
+                        <span>Warm soups, herbal tea, fruits, broth, fluids, and light meals help support hydration and recovery.</span>
+                    </div>
+
+                    <div class="diet-item">
+                        <strong>Gastrointestinal issues</strong>
+                        <span>Plain rice, bananas, toast, yogurt, broths, and oral rehydration fluids are often easier to tolerate.</span>
+                    </div>
+
+                    <div class="diet-item">
+                        <strong>Allergy symptoms</strong>
+                        <span>Fresh fruits, vegetables, and plenty of water help maintain energy while avoiding trigger foods.</span>
+                    </div>
+
+                    <div class="diet-item">
+                        <strong>Dehydration</strong>
+                        <span>Electrolyte drinks, coconut water, soups, and water-rich foods can help replace fluid and mineral loss.</span>
+                    </div>
+
+                </div>
 
             </div>
 
@@ -2301,6 +2513,33 @@
 
                             <p id="appointmentStatus" role="status" aria-live="polite"></p>
 
+                            <!-- ML Predictions Display -->
+                            <div id="mlPredictions" class="ml-predictions">
+                                <div class="ml-section-title">
+                                    🤖 AI Health Insights
+                                </div>
+
+                                <div class="ml-metric">
+                                    <div class="ml-metric-label">Patient Reliability</div>
+                                    <div class="ml-metric-value" id="confidenceScore">—</div>
+                                </div>
+
+                                <div class="ml-metric">
+                                    <div class="ml-metric-label">Appointment Priority</div>
+                                    <div id="riskIndicator">—</div>
+                                </div>
+
+                                <div class="ml-metric">
+                                    <div class="ml-metric-label">No-Show Risk</div>
+                                    <div class="ml-metric-value" id="noShowRisk">—</div>
+                                </div>
+
+                                <div class="ml-recommendations">
+                                    <strong>💡 Recommendation:</strong>
+                                    <p id="mlRecommendation">Preparing analysis...</p>
+                                </div>
+                            </div>
+
                         </div>
 
 
@@ -2385,7 +2624,7 @@
                     </h3>
 
                     <p>
-                        MediCare is designed as an educational healthcare portal. The symptom checker provides possible conditions only and does not provide a medical diagnosis.
+                        MEdicare is designed as an educational health assistance portal. The symptom checker provides possible conditions only and does not provide a medical diagnosis.
                     </p>
 
                     <br>
@@ -2447,7 +2686,7 @@
         <div class="container">
 
             <h2>
-                MediCare
+                MEdicare
             </h2>
 
             <p>
@@ -2455,7 +2694,7 @@
             </p>
 
             <p style="margin-top:10px;">
-                © 2026 MediCare | Educational Project
+                © 2026 MEdicare | Educational Project
             </p>
 
         </div>
@@ -2469,8 +2708,8 @@
 
     <script>
         /* =====================================================
-                           SYMPTOM CHECKER
-                        ===================================================== */
+                                                                                   SYMPTOM CHECKER
+                                                                                ===================================================== */
 
         function checkSymptoms() {
 
@@ -2629,7 +2868,18 @@
 
                     minimum: 2,
 
-                    advice: "These symptoms can occur with common viral respiratory infections. Rest and hydration may be helpful."
+                    advice: "These symptoms can occur with common viral respiratory infections. Rest and hydration may be helpful.",
+
+                    diet: {
+                        title: "Cold / Flu diet chart",
+                        items: [
+                            "Warm soups and broths for hydration and comfort",
+                            "Herbal tea, warm water, and plenty of fluids",
+                            "Bananas, oranges, berries, and vitamin-rich fruits",
+                            "Light meals like oats, rice, toast, and soft vegetables"
+                        ],
+                        avoid: "Avoid very oily, spicy, or heavy meals until you feel better."
+                    }
                 },
 
 
@@ -2646,7 +2896,18 @@
 
                     minimum: 3,
 
-                    advice: "Fever, body pain, fatigue and respiratory symptoms can occur with influenza-like illnesses."
+                    advice: "Fever, body pain, fatigue and respiratory symptoms can occur with influenza-like illnesses.",
+
+                    diet: {
+                        title: "Flu-like illness diet chart",
+                        items: [
+                            "Warm fluids such as soup, lemon water, and tea",
+                            "Easy-to-digest foods like rice, oats, and toast",
+                            "Fruits rich in vitamin C such as oranges and kiwis",
+                            "Small, frequent meals to maintain energy and hydration"
+                        ],
+                        avoid: "Avoid alcohol, excess sugar, and very heavy meals that worsen fatigue."
+                    }
                 },
 
 
@@ -2663,7 +2924,18 @@
 
                     minimum: 2,
 
-                    advice: "These symptoms can occur with gastrointestinal infections. Hydration may be important."
+                    advice: "These symptoms can occur with gastrointestinal infections. Hydration may be important.",
+
+                    diet: {
+                        title: "GI infection diet chart",
+                        items: [
+                            "Oral rehydration solution, broth, and clean water",
+                            "Bananas, rice, applesauce, and toast (BRAT diet)",
+                            "Plain yogurt with probiotics if tolerated",
+                            "Gentle foods like plain noodles, potatoes, and soup"
+                        ],
+                        avoid: "Avoid fried foods, dairy-heavy meals, sweets, and very spicy dishes until symptoms settle."
+                    }
                 },
 
 
@@ -2678,7 +2950,18 @@
 
                     minimum: 2,
 
-                    advice: "Runny nose, throat irritation and some skin symptoms can occur with allergies."
+                    advice: "Runny nose, throat irritation and some skin symptoms can occur with allergies.",
+
+                    diet: {
+                        title: "Allergy-friendly diet chart",
+                        items: [
+                            "Fresh fruits and vegetables with anti-inflammatory value",
+                            "Hydrating meals like soups, salads, and smoothies",
+                            "Whole grains, nuts, and seeds in moderation",
+                            "Foods that are low in processed additives and known trigger ingredients"
+                        ],
+                        avoid: "Avoid foods you know trigger allergy symptoms and limit highly processed, sugary meals."
+                    }
                 },
 
 
@@ -2695,7 +2978,18 @@
 
                     minimum: 2,
 
-                    advice: "Several viral illnesses can cause these symptoms. Symptoms alone cannot identify the exact cause."
+                    advice: "Several viral illnesses can cause these symptoms. Symptoms alone cannot identify the exact cause.",
+
+                    diet: {
+                        title: "Recovery diet chart",
+                        items: [
+                            "Citrus fruits, berries, and fresh vegetables",
+                            "Broth-based soups and warm fluids",
+                            "Oatmeal, rice, eggs, and soft proteins",
+                            "Small meals spread through the day for steady energy"
+                        ],
+                        avoid: "Avoid skipping meals, excessive caffeine, and heavy greasy food during recovery."
+                    }
                 },
 
 
@@ -2712,7 +3006,18 @@
 
                     minimum: 2,
 
-                    advice: "Vomiting or diarrhea may contribute to fluid loss and dizziness."
+                    advice: "Vomiting or diarrhea may contribute to fluid loss and dizziness.",
+
+                    diet: {
+                        title: "Hydration diet chart",
+                        items: [
+                            "Water, oral rehydration solution, coconut water",
+                            "Soups, broths, fruit juices, and watermelon",
+                            "Bananas, potatoes, and light starchy foods",
+                            "Electrolyte-rich foods and frequent small sips"
+                        ],
+                        avoid: "Avoid excess alcohol, very salty snacks, and heavy meals until hydration improves."
+                    }
                 }
 
             ];
@@ -2857,7 +3162,34 @@
                 );
 
 
+            const topMatch = matches[0];
+            const dietChart = topMatch && topMatch.diet ? topMatch.diet : {
+                title: "Balanced recovery diet",
+                items: [
+                    "Drink plenty of water and fluids",
+                    "Choose light, nutrient-rich foods",
+                    "Add fruits, vegetables, and protein in small portions",
+                    "Avoid very oily, spicy, or highly processed foods"
+                ],
+                avoid: "Talk with a healthcare professional if symptoms persist or worsen."
+            };
+
             html += `
+
+        <div class="diet-chart-box">
+            <h4>🥗 ${dietChart.title}</h4>
+            <div class="diet-chart-grid">
+                ${dietChart.items.map((item) => `
+                    <div class="diet-item">
+                        <strong>Recommended</strong>
+                        <span>${item}</span>
+                    </div>
+                `).join("")}
+            </div>
+            <div class="disclaimer" style="margin-top: 12px;">
+                <strong>Limit:</strong> ${dietChart.avoid}
+            </div>
+        </div>
 
         <div class="disclaimer">
 

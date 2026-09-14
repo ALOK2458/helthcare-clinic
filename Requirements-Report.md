@@ -78,4 +78,4 @@ The current version is a demo and should not be used with real patient data unti
 - The site loads successfully through the main entry page and web server.
 
 ## 9. Summary
-The Requirements Report confirms that the Healthcare Clinic project is designed as a functional appointment booking and scheduling demo with predictive assistant capabilities. It supports the core booking workflow while clearly identifying the current limitations of the implementation.
+The Requirements Report confirms that the MEdicare project is designed as a functional appointment booking and scheduling demo with predictive assistant capabilities. It supports the core booking workflow while clearly identifying the current limitations of the implementation.

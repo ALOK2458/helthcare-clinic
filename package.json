@@ -1,8 +1,8 @@
 {
-    "name": "medicare-demo",
-    "version": "1.0.0",
+    "name": "medicare-smart-health-assistence",
+    "version": "2.0.0",
     "private": true,
-    "description": "MediCare healthcare demo with a small appointment backend",
+    "description": "MEdicare: a smart health assistence with ML-powered appointment recommendations",
     "scripts": {
         "start": "node server.js",
         "test": "node tests/smoke-test.js"

@@ -1,6 +1,6 @@
-# HealthCare Clinic
+# MEdicare: a smart health assistence
 
-MediCare is a healthcare demo site with a small Node.js backend for storing appointment requests locally.
+MEdicare is a smart health assistance demo site with a small Node.js backend for storing appointment requests locally.
 
 Quick start
 
@@ -26,7 +26,7 @@ Deploy to GitHub
 ```bash
 git init
 git add .
-git commit -m "Initial healthcare demo site"
+git commit -m "Initial MEdicare smart health assistence site"
 git branch -M main
 git remote add origin <your-repo-url>
 git push -u origin main

@@ -77,6 +77,22 @@ async function main() {
             throw new Error(`Health check failed: ${health.statusCode}`);
         }
 
+        const page = await request("/");
+        if (page.statusCode !== 200) {
+            throw new Error(`Homepage request failed: ${page.statusCode}`);
+        }
+        if (!page.body.includes("Diet") && !page.body.includes("diet.html")) {
+            throw new Error("Homepage is missing the diet page link");
+        }
+
+        const dietPage = await request("/diet.html");
+        if (dietPage.statusCode !== 200) {
+            throw new Error(`Diet page request failed: ${dietPage.statusCode}`);
+        }
+        if (!dietPage.body.includes("Diet Chart") && !dietPage.body.includes("Disease-Based Diet")) {
+            throw new Error("Diet page is missing its main content");
+        }
+
         const appointmentPayload = {
             name: "Test User",
             phone: "1234567890",

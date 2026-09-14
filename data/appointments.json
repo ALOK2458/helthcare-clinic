@@ -1,0 +1,37 @@
+[{
+        "id": "seed-001",
+        "name": "Aisha Patel",
+        "phone": "9876543210",
+        "doctor": "Dr. Smith",
+        "date": "2026-09-18",
+        "time": "10:30",
+        "consultationType": "Checkup",
+        "reason": "Routine annual health review",
+        "status": "requested",
+        "createdAt": "2026-09-14T08:00:00.000Z"
+    },
+    {
+        "id": "seed-002",
+        "name": "Rahul Sharma",
+        "phone": "9988776655",
+        "doctor": "Dr. Johnson",
+        "date": "2026-09-19",
+        "time": "14:00",
+        "consultationType": "Follow-up",
+        "reason": "Post-treatment follow-up consultation",
+        "status": "requested",
+        "createdAt": "2026-09-14T08:05:00.000Z"
+    },
+    {
+        "id": "seed-003",
+        "name": "Meera Nair",
+        "phone": "9123456780",
+        "doctor": "Dr. Williams",
+        "date": "2026-09-20",
+        "time": "16:30",
+        "consultationType": "Specialist",
+        "reason": "Cardiology specialist assessment",
+        "status": "requested",
+        "createdAt": "2026-09-14T08:10:00.000Z"
+    }
+]
