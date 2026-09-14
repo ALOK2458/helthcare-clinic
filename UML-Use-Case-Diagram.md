@@ -46,6 +46,12 @@ flowchart LR
     UC6 --> UC7
     UC6 --> UC8
     UC9 --> UC5
+
+    classDef actor fill:#E6F0FF,stroke:#1D4ED8,stroke-width:2px,color:#0F172A,rx:14,ry:14;
+    classDef useCase fill:#EAF7EA,stroke:#2E7D32,stroke-width:2px,color:#1B2E1B,rx:12,ry:12;
+
+    class P,S,D,M actor;
+    class UC1,UC2,UC3,UC4,UC5,UC6,UC7,UC8,UC9,UC10 useCase;
 ```
 
 ## 3. Use Case Descriptions
