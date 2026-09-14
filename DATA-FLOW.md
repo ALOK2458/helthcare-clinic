@@ -57,5 +57,18 @@ These recommendations are calculated using the current appointment data and the 
 ## 8. End-to-End Flow Summary
 Browser UI → `js/main.js` → `server.js` → `js/ml-models.js` → `data/appointments.json` → JSON response back to UI
 
-## 9. Important Note
+## 9. Data Flow Diagram
+```mermaid
+flowchart LR
+    A[User fills appointment form] --> B[Frontend: js/main.js]
+    B --> C[Backend: server.js]
+    C --> D[Validate request]
+    D --> E[Check conflicts]
+    E --> F[ML logic: js/ml-models.js]
+    F --> G[Save to data/appointments.json]
+    G --> H[Return JSON response to frontend]
+    H --> I[Display result in browser]
+```
+
+## 10. Important Note
 This project currently uses a local JSON file for storage, so the data flow is simple and demo-friendly. It is not yet a production-grade medical data system.
