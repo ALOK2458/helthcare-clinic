@@ -18,6 +18,8 @@ Appointments are saved to `data/appointments.json`. The API also exposes:
 - `POST /api/appointments` to create a request.
 - `GET /api/appointments` to inspect locally saved requests.
 
+Architecture diagrams and design-pattern notes are in [ARCHITECTURE-DESIGN.md](ARCHITECTURE-DESIGN.md). The completed template-based [Software Design Analysis Report](SOFTWARE-DESIGN-ANALYSIS-REPORT.md) documents module decomposition, coupling, cohesion, and interactions.
+
 The backend validates required fields, rejects past dates, and prevents two active appointments for the same doctor, date, and time. Successful bookings return a unique request ID and timestamp.
 
 Deploy to GitHub
