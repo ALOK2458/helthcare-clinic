@@ -1,3 +1,5 @@
+const API_BASE_URL = window.location.port === '5501' ? 'http://localhost:3000' : '';
+
 async function bookAppointment(event) {
     event.preventDefault();
 
@@ -14,14 +16,19 @@ async function bookAppointment(event) {
     mlPredictionsDiv.classList.remove('show');
 
     try {
-        const response = await fetch('/api/appointments', {
+        const response = await fetch(`${API_BASE_URL}/api/appointments`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(payload)
         });
-        const result = await response.json();
+        let result;
+        try {
+            result = await response.json();
+        } catch (error) {
+            throw new Error('The appointment service returned an invalid response. Open the app at http://localhost:3000.');
+        }
 
         if (!response.ok) throw new Error(result.error || 'Request failed');
 

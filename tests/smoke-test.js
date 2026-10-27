@@ -113,6 +113,25 @@ async function main() {
             throw new Error("Appointment response was missing a generated ID");
         }
 
+        const repeatBooking = await request("/api/appointments", "POST", {
+            ...appointmentPayload,
+            doctor: "Dr. Johnson",
+            time: "11:30"
+        });
+        if (repeatBooking.statusCode !== 429) {
+            throw new Error(`Repeat booking should be rate limited: ${repeatBooking.statusCode} ${repeatBooking.body}`);
+        }
+
+        const otherPatientBooking = await request("/api/appointments", "POST", {
+            ...appointmentPayload,
+            phone: "1234567891",
+            doctor: "Dr. Johnson",
+            time: "11:30"
+        });
+        if (otherPatientBooking.statusCode !== 201) {
+            throw new Error(`A different patient should be able to book: ${otherPatientBooking.statusCode} ${otherPatientBooking.body}`);
+        }
+
         const appointments = await request("/api/appointments");
         if (appointments.statusCode !== 200) {
             throw new Error(`Appointments fetch failed: ${appointments.statusCode}`);

@@ -84,6 +84,16 @@ function hasConflictingAppointment(appointment) {
     );
 }
 
+function hasRecentAppointment(appointment) {
+    const cooldownMs = 30 * 60 * 1000;
+    const now = Date.now();
+    return readAppointments().some((saved) => {
+        if (saved.phone !== appointment.phone) return false;
+        const elapsedMs = now - Date.parse(saved.createdAt);
+        return elapsedMs >= 0 && elapsedMs < cooldownMs;
+    });
+}
+
 function serveStatic(request, response) {
     const requestedPath = request.url === "/" ? "/index.html" : request.url;
     const filePath = path.normalize(path.join(ROOT, requestedPath));
@@ -143,6 +153,13 @@ const server = http.createServer(async (request, response) => {
                 status: "requested",
                 createdAt: new Date().toISOString()
             };
+            if (hasRecentAppointment(appointment)) {
+                sendJson(response, 429, {
+                    error: "Please wait 30 minutes between appointment bookings."
+                });
+                return;
+            }
+
             if (hasConflictingAppointment(appointment)) {
                 sendJson(response, 409, {
                     error: "That doctor already has an appointment at this time. Please choose another slot."

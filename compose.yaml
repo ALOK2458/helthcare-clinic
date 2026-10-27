@@ -1,0 +1,11 @@
+services:
+  medicare:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - appointment-data:/app/data
+    restart: unless-stopped
+
+volumes:
+  appointment-data:
